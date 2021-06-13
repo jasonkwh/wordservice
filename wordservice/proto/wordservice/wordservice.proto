@@ -1,0 +1,37 @@
+syntax = "proto3";
+package wordservice;
+
+option go_package = "/wordservice";
+
+import "google/protobuf/timestamp.proto";
+
+service WordService {
+  rpc AddWords(AddWordsRequest) returns (WordsResponse) {}
+  rpc UpdateWord(UpdateWordRequest) returns (WordsResponse) {}
+  rpc SearchWord(SearchWordRequest) returns (WordsResponse) {}
+}
+
+message SearchWordRequest {
+  string value = 1;
+}
+
+message UpdateWordRequest {
+  string orig_value = 1;
+  string new_value = 2;
+}
+
+message AddWordsRequest {
+  repeated string values = 1;
+}
+
+message WordsResponse {
+  repeated Word words = 1;
+}
+
+message Word {
+  int64 id = 1;
+  string value = 2;
+  google.protobuf.Timestamp added_time = 3;
+  google.protobuf.Timestamp modified_time = 4;
+  int64 search_count = 5;
+}
