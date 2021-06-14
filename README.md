@@ -17,9 +17,9 @@ wordservice/
 │  ├─ proto/
 │     ├─ wordservice/
 │        ├─ wordservice.proto
-│        ├─ wordservice.go
-│        ├─ storage.go
 │  ├─ service/
+│     ├─ wordservice.go
+│     ├─ storage.go
 │  ├─ main.go
 ├─ README.md
 ```

@@ -1,14 +1,15 @@
-package wordservice
+package service
 
 import (
 	"errors"
 	"google.golang.org/protobuf/types/known/timestamppb"
+	pb "deltatre_grpc/proto/wordservice"
 	"sort"
 	"strings"
 )
 
 type WordStorage struct {
-	items []*Word
+	items []*pb.Word
 }
 
 /*
@@ -17,7 +18,7 @@ Function inserts words into storage
 func (w *WordStorage) AddWords(values *[]string) error {
 	if len(*values) > 0 {
 		for _, v := range *values {
-			var word Word
+			var word pb.Word
 			word.Id = int64(len(w.items) + 1)
 			word.Value = v
 			word.SearchCount = 0
@@ -33,7 +34,7 @@ func (w *WordStorage) AddWords(values *[]string) error {
 Return top five searches
 Order by SearchCount descending, Value ascending
  */
-func (w *WordStorage) TopSearchWords() ([]*Word, error) {
+func (w *WordStorage) TopSearchWords() ([]*pb.Word, error) {
 	if len(w.items) >= 5 {
 		sort.SliceStable(w.items, func(i, j int) bool {
 			if w.items[i].SearchCount != w.items[j].SearchCount {
@@ -49,8 +50,8 @@ func (w *WordStorage) TopSearchWords() ([]*Word, error) {
 /*
 Search for a specified pattern in word storage
  */
-func (w *WordStorage) GetSearchWords(value *string) ([]*Word, error) {
-	var output []*Word
+func (w *WordStorage) GetSearchWords(value *string) ([]*pb.Word, error) {
+	var output []*pb.Word
 	if len(w.items) > 0 {
 		for _, word := range w.items {
 			//Search for a single word

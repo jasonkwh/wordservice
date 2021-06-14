@@ -6,6 +6,7 @@ import (
 	"net"
 	"google.golang.org/grpc"
 	"deltatre_grpc/proto/wordservice"
+	"deltatre_grpc/service"
 )
 
 var grpcEndpoint = flag.String("grpc-endpoint", "localhost:9000", "gRPC server endpoint")
@@ -24,7 +25,7 @@ func run() error {
 		return err
 	}
 
-	s := wordservice.Server{}
+	s := service.Server{}
 	s.SetDefaultWords()
 	grpcServer := grpc.NewServer()
 
