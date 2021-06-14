@@ -54,6 +54,8 @@ func (w *WordStorage) GetSearchWords(value *string) ([]*Word, error) {
 	var output []*Word
 	if len(w.items) > 0 {
 		for _, word := range w.items {
+			//Search for a single word
+			//if word.Value == *value {
 			if strings.Contains(word.Value, *value) {
 				word.SearchCount++
 				output = append(output, word)

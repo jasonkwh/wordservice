@@ -51,7 +51,7 @@ curl -X "POST" "http://localhost:8000/v1/words" \
 }'
 ```
 
-- Search for a single word
+- Use keyword to search words
 ```bash
 curl -X "GET" "http://localhost:8000/v1/words/{keyword}" \
      -H 'Content-Type: application/json'
