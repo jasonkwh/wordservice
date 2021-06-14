@@ -26,17 +26,17 @@ wordservice/
 
 ### Getting Started
 
-- Start Front-end API service
+- Build & start Front-end API service
 ```bash
 cd ./api
 go build && ./deltatre_api
 ➜ 2021/06/14 11:12:40 API server listening on: localhost:8000
 ```
 
-- Start Back-end service
+- Test, Build, and Start Back-end service
 ```bash
 cd ./wordservice
-go build && ./deltatre_grpc
+go test ./service && go build && ./deltatre_grpc
 ➜ 2021/06/14 11:12:41 gRPC server listening on: localhost:9000
 ```
 
