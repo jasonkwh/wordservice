@@ -16,7 +16,12 @@ service WordService {
   rpc SearchWord(SearchWordRequest) returns (WordsResponse) {
     option (google.api.http) = { get: "/v1/words/{value}" };
   }
+  rpc TopSearches(TopSearchesRequest) returns (WordsResponse) {
+    option (google.api.http) = { get: "/v1/trends" };
+  }
 }
+
+message TopSearchesRequest {}
 
 message SearchWordRequest {
   string value = 1;

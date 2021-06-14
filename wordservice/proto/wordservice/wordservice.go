@@ -1,7 +1,6 @@
 package wordservice
 
 import (
-	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"sync"
@@ -24,8 +23,11 @@ func (s *Server) AddWords(ctx context.Context, in *AddWordsRequest) (*WordsRespo
 }
 
 func (s *Server) SearchWord(ctx context.Context, in *SearchWordRequest) (*WordsResponse, error) {
-	fmt.Println(in.Value)
-	return &WordsResponse{Words:s.words.items}, nil
+	return &WordsResponse{Words:s.words.GetSearchWords(&in.Value)}, nil
+}
+
+func (s *Server) TopSearches(ctx context.Context, in *TopSearchesRequest) (*WordsResponse, error) {
+	return &WordsResponse{Words:s.words.TopSearchWords()}, nil
 }
 
 func (s *Server) UpdateWord(ctx context.Context, in *UpdateWordRequest) (*WordsResponse, error) {

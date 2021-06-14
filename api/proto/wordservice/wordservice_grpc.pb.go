@@ -21,6 +21,7 @@ type WordServiceClient interface {
 	AddWords(ctx context.Context, in *AddWordsRequest, opts ...grpc.CallOption) (*WordsResponse, error)
 	UpdateWord(ctx context.Context, in *UpdateWordRequest, opts ...grpc.CallOption) (*WordsResponse, error)
 	SearchWord(ctx context.Context, in *SearchWordRequest, opts ...grpc.CallOption) (*WordsResponse, error)
+	TopSearches(ctx context.Context, in *TopSearchesRequest, opts ...grpc.CallOption) (*WordsResponse, error)
 }
 
 type wordServiceClient struct {
@@ -58,6 +59,15 @@ func (c *wordServiceClient) SearchWord(ctx context.Context, in *SearchWordReques
 	return out, nil
 }
 
+func (c *wordServiceClient) TopSearches(ctx context.Context, in *TopSearchesRequest, opts ...grpc.CallOption) (*WordsResponse, error) {
+	out := new(WordsResponse)
+	err := c.cc.Invoke(ctx, "/wordservice.WordService/TopSearches", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WordServiceServer is the server API for WordService service.
 // All implementations must embed UnimplementedWordServiceServer
 // for forward compatibility
@@ -65,6 +75,7 @@ type WordServiceServer interface {
 	AddWords(context.Context, *AddWordsRequest) (*WordsResponse, error)
 	UpdateWord(context.Context, *UpdateWordRequest) (*WordsResponse, error)
 	SearchWord(context.Context, *SearchWordRequest) (*WordsResponse, error)
+	TopSearches(context.Context, *TopSearchesRequest) (*WordsResponse, error)
 	mustEmbedUnimplementedWordServiceServer()
 }
 
@@ -80,6 +91,9 @@ func (UnimplementedWordServiceServer) UpdateWord(context.Context, *UpdateWordReq
 }
 func (UnimplementedWordServiceServer) SearchWord(context.Context, *SearchWordRequest) (*WordsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchWord not implemented")
+}
+func (UnimplementedWordServiceServer) TopSearches(context.Context, *TopSearchesRequest) (*WordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TopSearches not implemented")
 }
 func (UnimplementedWordServiceServer) mustEmbedUnimplementedWordServiceServer() {}
 
@@ -148,6 +162,24 @@ func _WordService_SearchWord_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WordService_TopSearches_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TopSearchesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WordServiceServer).TopSearches(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/wordservice.WordService/TopSearches",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WordServiceServer).TopSearches(ctx, req.(*TopSearchesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WordService_ServiceDesc is the grpc.ServiceDesc for WordService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,6 +198,10 @@ var WordService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchWord",
 			Handler:    _WordService_SearchWord_Handler,
+		},
+		{
+			MethodName: "TopSearches",
+			Handler:    _WordService_TopSearches_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

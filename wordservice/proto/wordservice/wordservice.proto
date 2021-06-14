@@ -9,7 +9,10 @@ service WordService {
   rpc AddWords(AddWordsRequest) returns (WordsResponse) {}
   rpc UpdateWord(UpdateWordRequest) returns (WordsResponse) {}
   rpc SearchWord(SearchWordRequest) returns (WordsResponse) {}
+  rpc TopSearches(TopSearchesRequest) returns (WordsResponse) {}
 }
+
+message TopSearchesRequest {}
 
 message SearchWordRequest {
   string value = 1;

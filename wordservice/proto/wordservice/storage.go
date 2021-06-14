@@ -2,6 +2,7 @@ package wordservice
 
 import (
 	"google.golang.org/protobuf/types/known/timestamppb"
+	"sort"
 	"strings"
 )
 
@@ -20,13 +21,26 @@ func (w *WordStorage) AddWords(values *[]string) {
 	}
 }
 
-func (w *WordStorage) SearchWords(value *string) int {
-	for index, word := range w.items {
+func (w *WordStorage) TopSearchWords() []*Word {
+	output := w.items
+	sort.SliceStable(output, func(i, j int) bool {
+		if output[i].SearchCount != output[j].SearchCount {
+			return output[i].SearchCount > output[j].SearchCount
+		}
+		return output[i].Value < output[j].Value
+	})
+	return output[:5]
+}
+
+func (w *WordStorage) GetSearchWords(value *string) []*Word {
+	var output []*Word
+	for _, word := range w.items {
 		if strings.Contains(word.Value, *value) {
-			return index
+			word.SearchCount++
+			output = append(output, word)
 		}
 	}
-	return 0
+	return output
 }
 
 func (w *WordStorage) GetIndex(value *string) int {
