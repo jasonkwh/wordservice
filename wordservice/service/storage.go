@@ -114,5 +114,5 @@ func (w *WordStorage) ClearExistInputWords(values *[]string) error {
 		}
 		return errors.New("no input words")
 	}
-	return errors.New("storage is empty")
+	return nil
 }
