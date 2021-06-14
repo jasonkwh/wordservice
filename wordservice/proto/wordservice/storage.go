@@ -34,17 +34,16 @@ Return top five searches
 Order by SearchCount descending, Value ascending
  */
 func (w *WordStorage) TopSearchWords() ([]*Word, error) {
-	output := w.items
 	if len(w.items) >= 5 {
-		sort.SliceStable(output, func(i, j int) bool {
-			if output[i].SearchCount != output[j].SearchCount {
-				return output[i].SearchCount > output[j].SearchCount
+		sort.SliceStable(w.items, func(i, j int) bool {
+			if w.items[i].SearchCount != w.items[j].SearchCount {
+				return w.items[i].SearchCount > w.items[j].SearchCount
 			}
-			return output[i].Value < output[j].Value
+			return w.items[i].Value < w.items[j].Value
 		})
-		return output[:5], nil
+		return w.items[:5], nil
 	}
-	return output, errors.New("not enough words in storage")
+	return nil, errors.New("not enough words in storage")
 }
 
 /*
