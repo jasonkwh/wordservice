@@ -60,7 +60,7 @@ PS: Use single keyword
 
 - Update searchable words
 ```bash
-curl -X "PUT" "http://localhost:8000/v1/words" \
+curl -X "PATCH" "http://localhost:8000/v1/words" \
      -H 'Content-Type: application/json' \
      -d $'{
   "orig_value": "{original_word}","new_value":"{new_word}"

@@ -11,7 +11,7 @@ service WordService {
     option (google.api.http) = { post: "/v1/words", body: "*" };
   }
   rpc UpdateWord(UpdateWordRequest) returns (WordsResponse) {
-    option (google.api.http) = { put: "/v1/words", body: "*" };
+    option (google.api.http) = { patch: "/v1/words", body: "*" };
   }
   rpc SearchWord(SearchWordRequest) returns (WordsResponse) {
     option (google.api.http) = { get: "/v1/words/{value}" };
