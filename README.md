@@ -19,6 +19,7 @@ wordservice/
 │        ├─ wordservice.proto
 │  ├─ service/
 │     ├─ wordservice.go
+│     ├─ wordservice_test.go
 │     ├─ storage.go
 │  ├─ main.go
 ├─ README.md
