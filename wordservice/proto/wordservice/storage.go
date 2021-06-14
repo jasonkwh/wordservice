@@ -10,6 +10,9 @@ type WordStorage struct {
 	items []*Word
 }
 
+/*
+Function inserts words into storage
+ */
 func (w *WordStorage) AddWords(values *[]string) {
 	for _, v := range *values {
 		var word Word
@@ -21,6 +24,10 @@ func (w *WordStorage) AddWords(values *[]string) {
 	}
 }
 
+/*
+Return top five searches
+Order by SearchCount descending, Value ascending
+ */
 func (w *WordStorage) TopSearchWords() []*Word {
 	output := w.items
 	sort.SliceStable(output, func(i, j int) bool {
@@ -32,6 +39,9 @@ func (w *WordStorage) TopSearchWords() []*Word {
 	return output[:5]
 }
 
+/*
+Search for a specified pattern in word storage
+ */
 func (w *WordStorage) GetSearchWords(value *string) []*Word {
 	var output []*Word
 	for _, word := range w.items {
@@ -43,22 +53,32 @@ func (w *WordStorage) GetSearchWords(value *string) []*Word {
 	return output
 }
 
+/*
+Return index/key of a particular word struct in w.items
+-1 means word not exist
+ */
 func (w *WordStorage) GetIndex(value *string) int {
 	for index, word := range w.items {
 		if word.Value == (*value) {
 			return index
 		}
 	}
-	return 0
+	return -1
 }
 
+/*
+Check if w.items has the word or not
+ */
 func (w *WordStorage) IsContain(value *string) bool {
-	if w.GetIndex(value) == 0 {
+	if w.GetIndex(value) == -1 {
 		return false
 	}
 	return true
 }
 
+/*
+Function for AddWords rpc, check existence of input words in storage and clear the identicals
+ */
 func (w *WordStorage) ClearExistInputWords(values *[]string) {
 	if len(w.items) > 0 && len(*values) > 0 {
 		var result []string

@@ -12,6 +12,8 @@ service WordService {
   rpc TopSearches(TopSearchesRequest) returns (WordsResponse) {}
 }
 
+/* Requests/Responses */
+
 message TopSearchesRequest {}
 
 message SearchWordRequest {
@@ -30,6 +32,8 @@ message AddWordsRequest {
 message WordsResponse {
   repeated Word words = 1;
 }
+
+/* Resources */
 
 message Word {
   int64 id = 1;

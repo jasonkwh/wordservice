@@ -21,6 +21,8 @@ service WordService {
   }
 }
 
+/* Requests/Responses */
+
 message TopSearchesRequest {}
 
 message SearchWordRequest {
@@ -39,6 +41,8 @@ message AddWordsRequest {
 message WordsResponse {
   repeated Word words = 1;
 }
+
+/* Resources */
 
 message Word {
   int64 id = 1;
